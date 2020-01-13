@@ -8,8 +8,8 @@ import org.hexworks.zircon.api.uievent.ComponentEventType
 
 class DefaultMultiSelect<T: Any>(
         width: Int,
-        private val values: List<T>,
-        private val callback: (newValue: T) -> Unit,
+        override val values: List<T>,
+        override val callback: (newValue: T) -> Unit,
         private val centeredText: Boolean = true,
         private val toStringMethod: (T) -> String = Any::toString
 ) : MultiSelect<T> {
@@ -54,10 +54,10 @@ class DefaultMultiSelect<T: Any>(
                 addComponent(rightButton)
 
                 label.
-                        apply {
-                            text = getStringValue(0)
-                            textProperty.updateFrom(indexProperty) { i -> getStringValue(i) }
-                        }
+                    apply {
+                        text = getStringValue(0)
+                        textProperty.updateFrom(indexProperty) { i -> getStringValue(i) }
+                    }
             }
 
     private fun setValue(index: Int) {

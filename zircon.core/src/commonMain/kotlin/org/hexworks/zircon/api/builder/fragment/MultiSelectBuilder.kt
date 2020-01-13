@@ -13,7 +13,7 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
 
     private var callback: (T) -> Unit = {log.warn("No callback defined for a MultiSelect input!")}
     private var centeredText = true
-    private var toStringMethod = Any::toString
+    private var toStringMethod: (T) -> String = Any::toString
 
     fun withCallback(callbackFunction: (T) -> Unit) = also {
         this.callback = callbackFunction
@@ -23,7 +23,7 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
         this.centeredText = centerText
     }
 
-    fun withToStringMethod(function: KFunction1<Any, String>) = also {
+    fun withToStringMethod(function: (T) -> String) = also {
         this.toStringMethod = function
     }
 
