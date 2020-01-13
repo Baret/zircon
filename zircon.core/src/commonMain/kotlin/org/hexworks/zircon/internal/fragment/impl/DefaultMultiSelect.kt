@@ -14,6 +14,16 @@ class DefaultMultiSelect<T: Any>(
         private val toStringMethod: (T) -> String = Any::toString
 ) : MultiSelect<T> {
 
+    init {
+        if(values.isEmpty()) {
+            throw IllegalStateException("Values list may not be empty")
+        }
+        val minWidth = 3
+        if(width < minWidth) {
+            throw IllegalStateException("MultiSelect needs a minimum width of $minWidth, given was $width")
+        }
+    }
+
     private val indexProperty = createPropertyFrom(0)
 
     private val rightButton = Components.
