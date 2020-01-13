@@ -10,6 +10,6 @@ import kotlin.jvm.JvmStatic
 object Fragments {
 
     @JvmStatic
-    fun <M : Any> multSelect(width: Int, values: List<M>) = MultiSelectBuilder.newBuilder(width, values)
+    fun <M : Any> multiSelect(width: Int, values: List<M>) = MultiSelectBuilder.newBuilder(width, values)
 
 }

@@ -39,7 +39,7 @@ class MultiSelectBuilderTest {
     fun textTooLong() {
         val multiSelect = MultiSelectBuilder.
                 newBuilder(7, listOf("veryLongWord", "b")).
-                build()
+                build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
         assertThat(label.text).isEqualTo("veryL")
     }
@@ -48,7 +48,7 @@ class MultiSelectBuilderTest {
     fun centeredText() {
         val multiSelect = MultiSelectBuilder.
                 newBuilder(7, listOf("6")).
-                build()
+                build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
         assertThat(label.text).isEqualTo("  6")
     }
@@ -58,7 +58,7 @@ class MultiSelectBuilderTest {
         val multiSelect = MultiSelectBuilder.
                 newBuilder(7, listOf("9")).
                 withCenteredText(false).
-                build()
+                build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
         assertThat(label.text).isEqualTo("9")
     }
@@ -68,7 +68,7 @@ class MultiSelectBuilderTest {
         val multiSelect = MultiSelectBuilder.
                 newBuilder(10, listOf(TestClass(5))).
                 withToStringMethod(TestClass::bigger).
-                build()
+                build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
         assertThat(label.text).contains("500")
     }
