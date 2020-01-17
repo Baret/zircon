@@ -52,7 +52,7 @@ class MultiSelectBuilderTest {
                 newBuilder(7, listOf("6")).
                 build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
-        assertThat(label.text).isEqualTo("  6")
+        assertThat(label.text).isEqualTo("  6  ")
     }
 
     @Test

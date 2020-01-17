@@ -57,7 +57,6 @@ class DefaultMultiSelect<T: Any>(
             build().
             apply {
                 addComponent(leftButton)
-                addComponent(rightButton)
 
                 if(clickable) {
                     addComponent(buttonLabel.also { it.initLabel() })
@@ -68,6 +67,7 @@ class DefaultMultiSelect<T: Any>(
                     addComponent(label.also { it.initLabel() })
                 }
 
+                addComponent(rightButton)
             }
 
     private fun TextHolder.initLabel() {
@@ -104,7 +104,7 @@ class DefaultMultiSelect<T: Any>(
         val maxWidth = label.contentSize.width
         return if (centeredText && length < maxWidth) {
             val spacesCount = (maxWidth - length) / 2
-            this.padStart(spacesCount + length)
+            this.padStart(spacesCount + length).padEnd(maxWidth)
         } else {
             this.substring(0, kotlin.math.min(length, maxWidth))
         }
