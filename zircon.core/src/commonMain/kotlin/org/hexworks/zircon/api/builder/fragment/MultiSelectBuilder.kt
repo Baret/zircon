@@ -16,6 +16,7 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
     private var callback: (T) -> Unit = {log.warn("No callback defined for a MultiSelect input!")}
     private var centeredText = true
     private var toStringMethod: (T) -> String = Any::toString
+    private var clickable: Boolean = false
 
     /**
      * The callback to be used when the value changes.
@@ -38,7 +39,15 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
         this.toStringMethod = function
     }
 
-    override fun build(): MultiSelect<T> = DefaultMultiSelect(width, values, callback, centeredText, toStringMethod)
+    /**
+     * When set to true the center component, showing the text, will be an undecorated button that also invokes the
+     * callback (else it is just a simple label).
+     */
+    fun withClickableLabel(clickable: Boolean) = also {
+        this.clickable = clickable
+    }
+
+    override fun build(): MultiSelect<T> = DefaultMultiSelect(width, values, callback, centeredText, toStringMethod, clickable)
 
     override fun createCopy(): Builder<MultiSelect<T>> {
         return newBuilder(width, values).

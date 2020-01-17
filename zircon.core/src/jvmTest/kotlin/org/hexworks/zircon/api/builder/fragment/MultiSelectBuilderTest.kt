@@ -1,11 +1,13 @@
 package org.hexworks.zircon.api.builder.fragment
 
 import org.assertj.core.api.Assertions.*
+import org.hexworks.zircon.api.component.Button
 import org.hexworks.zircon.api.component.Label
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.fragment.MultiSelect
 import org.hexworks.zircon.internal.fragment.impl.DefaultMultiSelect
 import org.junit.Test
+import kotlin.reflect.full.isSubclassOf
 
 class MultiSelectBuilderTest {
     @Test
@@ -71,6 +73,25 @@ class MultiSelectBuilderTest {
                 build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
         assertThat(label.text).contains("500")
+    }
+
+    @Test
+    fun clickableMultiSelect() {
+        checkComponentClasses(true, 3, 0)
+    }
+
+    @Test
+    fun unclickableMultiSelect() {
+        checkComponentClasses(false, 2, 1)
+    }
+
+    private fun checkComponentClasses(clickable: Boolean, expectedNumberOfButtons: Int, expectedNumberOfLabels: Int) {
+        val multiSelect = MultiSelectBuilder.newBuilder(10, listOf("one", "two", "three")).withClickableLabel(clickable).build() as DefaultMultiSelect
+
+        val components = multiSelect.root.children.map { it::class }
+        println("components: $components")
+        assertThat(components.filter { it.isSubclassOf(Button::class) }).`as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfButtons Buttons").hasSize(expectedNumberOfButtons)
+        assertThat(components.filter { it.isSubclassOf(Label::class) }).`as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfLabels Labels").hasSize(expectedNumberOfLabels)
     }
 
     private fun getLabel(multiSelect: DefaultMultiSelect<out Any>) =

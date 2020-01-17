@@ -2,6 +2,8 @@ package org.hexworks.zircon.internal.fragment.impl
 
 import org.hexworks.cobalt.databinding.api.createPropertyFrom
 import org.hexworks.zircon.api.Components
+import org.hexworks.zircon.api.behavior.TextHolder
+import org.hexworks.zircon.api.component.Component
 import org.hexworks.zircon.api.fragment.MultiSelect
 import org.hexworks.zircon.api.graphics.Symbols
 import org.hexworks.zircon.api.uievent.ComponentEventType
@@ -9,9 +11,10 @@ import org.hexworks.zircon.api.uievent.ComponentEventType
 class DefaultMultiSelect<T: Any>(
         width: Int,
         override val values: List<T>,
-        override val callback: (newValue: T) -> Unit,
+        override val callback: (T) -> Unit,
         private val centeredText: Boolean = true,
-        private val toStringMethod: (T) -> String = Any::toString
+        private val toStringMethod: (T) -> String = Any::toString,
+        private val clickable: Boolean = false
 ) : MultiSelect<T> {
 
     init {
@@ -44,21 +47,35 @@ class DefaultMultiSelect<T: Any>(
             withSize(width - (leftButton.width + rightButton.width), 1).
             build()
 
+    private val buttonLabel = Components.button().
+            withDecorations().
+            withSize(label.size).
+            build()
+
     override val root = Components.hbox().
             withSize(width, 1).
             withSpacing(0).
             build().
             apply {
                 addComponent(leftButton)
-                addComponent(label)
                 addComponent(rightButton)
 
-                label.
-                    apply {
-                        text = getStringValue(0)
-                        textProperty.updateFrom(indexProperty) { i -> getStringValue(i) }
-                    }
+                buttonLabel.
+                        apply {
+                            initLabel()
+                        }
+                if(clickable) {
+                    addComponent(buttonLabel.also { it.initLabel() })
+                } else {
+                    addComponent(label.also { it.initLabel() })
+                }
+
             }
+
+    private fun TextHolder.initLabel() {
+        text = getStringValue(0)
+        textProperty.updateFrom(indexProperty) { i -> getStringValue(i) }
+    }
 
     private fun setValue(index: Int) {
         indexProperty.value = index
