@@ -3,7 +3,6 @@ package org.hexworks.zircon.internal.fragment.impl
 import org.hexworks.cobalt.databinding.api.createPropertyFrom
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.behavior.TextHolder
-import org.hexworks.zircon.api.component.Component
 import org.hexworks.zircon.api.fragment.MultiSelect
 import org.hexworks.zircon.api.graphics.Symbols
 import org.hexworks.zircon.api.uievent.ComponentEventType
@@ -11,7 +10,7 @@ import org.hexworks.zircon.api.uievent.ComponentEventType
 class DefaultMultiSelect<T: Any>(
         width: Int,
         override val values: List<T>,
-        override val callback: (T) -> Unit,
+        override val callback: (oldValue: T, newValue: T) -> Unit,
         private val centeredText: Boolean = true,
         private val toStringMethod: (T) -> String = Any::toString,
         private val clickable: Boolean = false
@@ -60,12 +59,11 @@ class DefaultMultiSelect<T: Any>(
                 addComponent(leftButton)
                 addComponent(rightButton)
 
-                buttonLabel.
-                        apply {
-                            initLabel()
-                        }
                 if(clickable) {
                     addComponent(buttonLabel.also { it.initLabel() })
+                    buttonLabel.processComponentEvents(ComponentEventType.ACTIVATED) {
+                        setValue(indexProperty.value, indexProperty.value)
+                    }
                 } else {
                     addComponent(label.also { it.initLabel() })
                 }
@@ -77,25 +75,27 @@ class DefaultMultiSelect<T: Any>(
         textProperty.updateFrom(indexProperty) { i -> getStringValue(i) }
     }
 
-    private fun setValue(index: Int) {
-        indexProperty.value = index
-        callback.invoke(values[indexProperty.value])
+    private fun setValue(from: Int, to: Int) {
+        indexProperty.value = to
+        callback.invoke(values[from], values[indexProperty.value])
     }
 
     private fun nextValue() {
-        var nextIndex = indexProperty.value + 1
+        val oldIndex = indexProperty.value
+        var nextIndex = oldIndex + 1
         if(nextIndex >= values.size) {
             nextIndex = 0
         }
-        setValue(nextIndex)
+        setValue(oldIndex, nextIndex)
     }
 
     private fun prevValue() {
-        var prevIndex = indexProperty.value - 1
+        val oldIndex = indexProperty.value
+        var prevIndex = oldIndex - 1
         if(prevIndex < 0) {
             prevIndex = values.size - 1
         }
-        setValue(prevIndex)
+        setValue(oldIndex, prevIndex)
     }
 
     private fun getStringValue(index: Int) = toStringMethod.invoke(values[index]).centered()

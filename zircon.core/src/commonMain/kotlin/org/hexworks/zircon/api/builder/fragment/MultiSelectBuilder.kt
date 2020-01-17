@@ -13,15 +13,15 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
 
     private val log = LoggerFactory.getLogger(this::class)
 
-    private var callback: (T) -> Unit = {log.warn("No callback defined for a MultiSelect input!")}
+    private var callback: (oldValue: T, newValue: T) -> Unit = { _, _ -> log.warn("No callback defined for a MultiSelect input!")}
     private var centeredText = true
     private var toStringMethod: (T) -> String = Any::toString
     private var clickable: Boolean = false
 
     /**
-     * The callback to be used when the value changes.
+     * The callback to be used when the value changes. It gets the old and the new value as parameters.
      */
-    fun withCallback(callbackFunction: (T) -> Unit) = also {
+    fun withCallback(callbackFunction: (oldValue: T, newValue: T) -> Unit) = also {
         this.callback = callbackFunction
     }
 
