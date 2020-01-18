@@ -30,13 +30,14 @@ object MultiSelectExample {
         val leftPanel = Components.panel().
                 withSize(20, 40).
                 withAlignmentWithin(screen, ComponentAlignment.LEFT_CENTER).
+                withDecorations(ComponentDecorations.box(BoxType.SINGLE, "Try them!")).
                 build().
                 also {
                     screen.addComponent(it)
                 }
 
         val fragmentsList = Components.vbox().
-                withSize(20, 20).
+                withSize(leftPanel.contentSize.width, 20).
                 withAlignmentWithin(leftPanel, ComponentAlignment.CENTER).
                 withSpacing(2).
                 build().
