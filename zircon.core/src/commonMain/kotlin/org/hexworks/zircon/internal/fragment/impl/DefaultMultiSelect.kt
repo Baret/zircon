@@ -7,7 +7,7 @@ import org.hexworks.zircon.api.fragment.MultiSelect
 import org.hexworks.zircon.api.graphics.Symbols
 import org.hexworks.zircon.api.uievent.ComponentEventType
 
-class DefaultMultiSelect<T: Any>(
+class DefaultMultiSelect<T : Any>(
         width: Int,
         override val values: List<T>,
         override val callback: (oldValue: T, newValue: T) -> Unit,
@@ -17,11 +17,11 @@ class DefaultMultiSelect<T: Any>(
 ) : MultiSelect<T> {
 
     init {
-        if(values.isEmpty()) {
+        if (values.isEmpty()) {
             throw IllegalStateException("Values list may not be empty")
         }
         val minWidth = 3
-        if(width < minWidth) {
+        if (width < minWidth) {
             throw IllegalStateException("MultiSelect needs a minimum width of $minWidth, given was $width")
         }
     }
@@ -33,25 +33,32 @@ class DefaultMultiSelect<T: Any>(
             withText(Symbols.ARROW_RIGHT.toString()).
             withDecorations().
             build().
-            apply { processComponentEvents(ComponentEventType.ACTIVATED) { nextValue()} }
+            apply {
+                processComponentEvents(ComponentEventType.ACTIVATED) { nextValue() }
+            }
 
     private val leftButton = Components.
             button().
             withText(Symbols.ARROW_LEFT.toString()).
             withDecorations().
             build().
-            apply { processComponentEvents(ComponentEventType.ACTIVATED) { prevValue()} }
+            apply {
+                processComponentEvents(ComponentEventType.ACTIVATED) { prevValue() }
+            }
 
-    private val label = Components.label().
+    private val label = Components.
+            label().
             withSize(width - (leftButton.width + rightButton.width), 1).
             build()
 
-    private val buttonLabel = Components.button().
+    private val buttonLabel = Components.
+            button().
             withDecorations().
             withSize(label.size).
             build()
 
-    override val root = Components.hbox().
+    override val root = Components.
+            hbox().
             withSize(width, 1).
             withSpacing(0).
             build().
@@ -83,7 +90,7 @@ class DefaultMultiSelect<T: Any>(
     private fun nextValue() {
         val oldIndex = indexProperty.value
         var nextIndex = oldIndex + 1
-        if(nextIndex >= values.size) {
+        if (nextIndex >= values.size) {
             nextIndex = 0
         }
         setValue(oldIndex, nextIndex)
@@ -92,7 +99,7 @@ class DefaultMultiSelect<T: Any>(
     private fun prevValue() {
         val oldIndex = indexProperty.value
         var prevIndex = oldIndex - 1
-        if(prevIndex < 0) {
+        if (prevIndex < 0) {
             prevIndex = values.size - 1
         }
         setValue(oldIndex, prevIndex)
