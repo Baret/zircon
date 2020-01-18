@@ -57,6 +57,13 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
     }
 
     companion object {
+        /**
+         * Creates a builder to configure and build a [MultiSelect].
+         *
+         * @param width The width this [MultiSelect] can take in its parent component (height will be 1).
+         * @param values The values to cycle through
+         * @param N The type of the values
+         */
         fun <N: Any> newBuilder(width: Int, values: List<N>) = MultiSelectBuilder(width, values)
     }
 }
