@@ -84,9 +84,10 @@ class MultiSelectBuilderTest {
         val multiSelect = MultiSelectBuilder.
                 newBuilder(10, listOf(TestClass(5))).
                 withToStringMethod(TestClass::bigger).
+                withCenteredText(false).
                 build() as DefaultMultiSelect
         val label = getLabel(multiSelect)
-        assertThat(label.text).contains("500")
+        assertThat(label.text).isEqualTo("500")
     }
 
     @Test
@@ -100,12 +101,18 @@ class MultiSelectBuilderTest {
     }
 
     private fun checkComponentClasses(clickable: Boolean, expectedNumberOfButtons: Int, expectedNumberOfLabels: Int) {
-        val multiSelect = MultiSelectBuilder.newBuilder(10, listOf("one", "two", "three")).withClickableLabel(clickable).build() as DefaultMultiSelect
+        val multiSelect = MultiSelectBuilder.
+                newBuilder(10, listOf("one", "two", "three")).
+                withClickableLabel(clickable).
+                build() as DefaultMultiSelect
 
         val components = multiSelect.root.children.map { it::class }
-        println("components: $components")
-        assertThat(components.filter { it.isSubclassOf(Button::class) }).`as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfButtons Buttons").hasSize(expectedNumberOfButtons)
-        assertThat(components.filter { it.isSubclassOf(Label::class) }).`as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfLabels Labels").hasSize(expectedNumberOfLabels)
+        assertThat(components.filter { it.isSubclassOf(Button::class) }).
+                `as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfButtons Buttons").
+                hasSize(expectedNumberOfButtons)
+        assertThat(components.filter { it.isSubclassOf(Label::class) }).
+                `as`("${if(clickable) "C" else "Unc"}lickable MultiSelect should have $expectedNumberOfLabels Labels").
+                hasSize(expectedNumberOfLabels)
     }
 
     private fun getLabel(multiSelect: DefaultMultiSelect<out Any>) =
