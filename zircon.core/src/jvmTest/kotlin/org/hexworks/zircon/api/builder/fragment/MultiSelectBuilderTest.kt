@@ -1,6 +1,7 @@
 package org.hexworks.zircon.api.builder.fragment
 
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.hexworks.zircon.api.component.Button
 import org.hexworks.zircon.api.component.Label
 import org.hexworks.zircon.api.data.Size
@@ -10,6 +11,19 @@ import org.junit.Test
 import kotlin.reflect.full.isSubclassOf
 
 class MultiSelectBuilderTest {
+    @Test
+    fun copyBuilder() {
+        val builder = MultiSelectBuilder.newBuilder(10, listOf("a")).
+                withCallback { _: String, _: String -> println("callback")}.
+                withCenteredText(false).
+                withClickableLabel(true).
+                withToStringMethod { s -> s + s }
+
+        val builderCopy = builder.createCopy()
+
+        assertThat(builderCopy).isEqualToIgnoringGivenFields(builder, "log")
+    }
+
     @Test
     fun sizeAndMinWidth() {
         for(w in -1..2) {

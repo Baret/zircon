@@ -53,7 +53,8 @@ class MultiSelectBuilder<T : Any>(val width: Int, val values: List<T>) : Fragmen
         return newBuilder(width, values).
                 withCallback(callback).
                 withCenteredText(centeredText).
-                withToStringMethod(toStringMethod)
+                withToStringMethod(toStringMethod).
+                withClickableLabel(clickable)
     }
 
     companion object {
