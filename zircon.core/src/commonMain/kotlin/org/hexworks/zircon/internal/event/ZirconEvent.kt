@@ -1,81 +1,68 @@
 package org.hexworks.zircon.internal.event
 
-import org.hexworks.cobalt.core.api.Identifier
+import org.hexworks.cobalt.Identifier
 import org.hexworks.cobalt.events.api.Event
 import org.hexworks.zircon.api.component.Component
-import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.internal.data.LayerState
+import org.hexworks.zircon.api.data.Position
 
 sealed class ZirconEvent : Event {
 
     /**
      * Cursor is requested at the given `position`.
      */
-    data class RequestCursorAt(
-            val position: Position,
-            override val emitter: Any
-    ) : ZirconEvent()
+    data class RequestCursorAt(val position: Position) : ZirconEvent()
 
     /**
      * Requests focus for the given [Component].
      * @see [org.hexworks.zircon.internal.behavior.ComponentFocusHandler]
      */
-    data class RequestFocusFor(
-            val component: Component,
-            override val emitter: Any
-    ) : ZirconEvent()
+    data class RequestFocusFor(val component: Component) : ZirconEvent()
 
     /**
      * Requests to clear focus for the given [Component].
      * @see [org.hexworks.zircon.internal.behavior.ComponentFocusHandler]
      */
-    data class ClearFocus(
-            val component: Component,
-            override val emitter: Any
-    ) : ZirconEvent()
+    data class ClearFocus(val component: Component) : ZirconEvent()
 
     /**
      * Hides the cursor
      */
-    data class HideCursor(override val emitter: Any) : ZirconEvent()
+    object HideCursor : ZirconEvent()
 
     /**
      * A [org.hexworks.zircon.api.screen.Screen] has been switched to
-     * (eg: the `display` function has been called on a Screen data class).
+     * (eg: the `display` function has been called on a Screen object).
      */
-    data class ScreenSwitch(val screenId: Identifier,
-                            override val emitter: Any) : ZirconEvent()
+    data class ScreenSwitch(val screenId: Identifier) : ZirconEvent()
 
     /**
      * An attached component was moved within a container.
      */
-    data class ComponentMoved(override val emitter: Any) : ZirconEvent()
+    object ComponentMoved : ZirconEvent()
 
     /**
      * A component was added to a component container.
      */
-    data class ComponentAdded(override val emitter: Any) : ZirconEvent()
+    object ComponentAdded : ZirconEvent()
 
     /**
      * A component was removed
      */
-    data class ComponentRemoved(override val emitter: Any) : ZirconEvent()
+    object ComponentRemoved : ZirconEvent()
 
     /**
      * A layer was added.
      */
-    data class LayerAdded(override val emitter: Any) : ZirconEvent()
+    object LayerAdded : ZirconEvent()
 
     /**
      * A layer was removed.
      */
-    data class LayerRemoved(override val emitter: Any) : ZirconEvent()
+    object LayerRemoved : ZirconEvent()
 
     /**
      * This event is fired when the state of a layer changes.
      */
-    data class LayerChanged(
-            val state: LayerState,
-            override val emitter: Any
-    ) : ZirconEvent()
+    data class LayerChanged(val state: LayerState) : ZirconEvent()
 }

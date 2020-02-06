@@ -1,6 +1,6 @@
 package org.hexworks.zircon.internal.component.impl
 
-import org.hexworks.cobalt.databinding.api.extension.toProperty
+import org.hexworks.cobalt.databinding.api.createPropertyFrom
 import org.hexworks.zircon.api.builder.component.ComponentStyleSetBuilder
 import org.hexworks.zircon.api.builder.graphics.StyleSetBuilder
 import org.hexworks.zircon.api.color.TileColor
@@ -12,7 +12,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class DefaultProgressBar(componentMetadata: ComponentMetadata,
-                         renderingStrategy: ComponentRenderingStrategy<ProgressBar>,
+                         private val renderingStrategy: ComponentRenderingStrategy<ProgressBar>,
                          override val range: Int,
                          override val numberOfSteps: Int,
                          override val displayPercentValueOfProgress: Boolean)
@@ -20,7 +20,7 @@ class DefaultProgressBar(componentMetadata: ComponentMetadata,
         componentMetadata = componentMetadata,
         renderer = renderingStrategy) {
 
-    override val progressProperty = 0.0.toProperty()
+    override val progressProperty = createPropertyFrom(0.0)
     override var progress: Double by progressProperty.asDelegate()
 
     init {
@@ -29,6 +29,7 @@ class DefaultProgressBar(componentMetadata: ComponentMetadata,
             render()
         }
     }
+
 
     override fun acceptsFocus() = false
 

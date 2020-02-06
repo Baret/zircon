@@ -83,7 +83,7 @@ open class DefaultContainer(componentMetadata: ComponentMetadata,
             component.attachTo(this)
             components.add(component)
             Zircon.eventBus.publish(
-                    event = ZirconEvent.ComponentAdded(this),
+                    event = ZirconEvent.ComponentAdded,
                     eventScope = ZirconScope)
         } ?: throw IllegalArgumentException(
                 "The supplied component does not implement InternalComponent.")
@@ -106,7 +106,7 @@ open class DefaultContainer(componentMetadata: ComponentMetadata,
             // TODO: regression test this!
             component.detach()
             Zircon.eventBus.publish(
-                    event = ZirconEvent.ComponentRemoved(this),
+                    event = ZirconEvent.ComponentRemoved,
                     eventScope = ZirconScope)
         }
         return removalHappened
@@ -120,7 +120,7 @@ open class DefaultContainer(componentMetadata: ComponentMetadata,
         }
         if (removalHappened) {
             Zircon.eventBus.publish(
-                    event = ZirconEvent.ComponentRemoved(this),
+                    event = ZirconEvent.ComponentRemoved,
                     eventScope = ZirconScope)
         }
         return removalHappened
