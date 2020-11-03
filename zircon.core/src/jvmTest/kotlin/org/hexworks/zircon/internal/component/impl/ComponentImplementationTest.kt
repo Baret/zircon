@@ -1,13 +1,13 @@
 package org.hexworks.zircon.internal.component.impl
 
 import org.assertj.core.api.Assertions.assertThat
-import org.hexworks.zircon.api.DrawSurfaces
 import org.hexworks.zircon.api.component.data.ComponentState.*
 import org.hexworks.zircon.api.component.renderer.ComponentRenderContext
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.graphics.TileGraphics
 import org.hexworks.zircon.api.uievent.MouseEvent
-import org.hexworks.zircon.api.uievent.MouseEventType.*
+import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_ENTERED
+import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_EXITED
 import org.hexworks.zircon.api.uievent.UIEventPhase
 import org.hexworks.zircon.internal.component.InternalComponent
 import org.junit.Test
@@ -28,7 +28,7 @@ abstract class ComponentImplementationTest<T : InternalComponent> : CommonCompon
 
     @Test
     open fun When_a_highlighted_component_with_focus_is_activated_Then_it_becomes_active() {
-        target.mouseEntered(event = MouseEvent(MOUSE_ENTERED, 1, Position.zero()),
+        target.mouseEntered(event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
         target.focusGiven()
         rendererStub.clear()
@@ -39,10 +39,10 @@ abstract class ComponentImplementationTest<T : InternalComponent> : CommonCompon
 
     @Test
     open fun When_a_highlighted_component_without_focus_is_no_longer_hovered_Then_it_becomes_default() {
-        target.mouseEntered(event = MouseEvent(MOUSE_ENTERED, 1, Position.zero()),
+        target.mouseEntered(event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
         rendererStub.clear()
-        target.mouseExited(event = MouseEvent(MOUSE_EXITED, 1, Position.zero()),
+        target.mouseExited(event = MouseEvent<Any?>(MOUSE_EXITED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
 
         assertThat(target.componentState).isEqualTo(DEFAULT)
@@ -50,7 +50,7 @@ abstract class ComponentImplementationTest<T : InternalComponent> : CommonCompon
 
     @Test
     open fun When_a_highlighted_component_without_focus_is_activated_Then_it_becomes_active() {
-        target.mouseEntered(event = MouseEvent(MOUSE_ENTERED, 1, Position.zero()),
+        target.mouseEntered(event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
         rendererStub.clear()
         target.activated()
@@ -64,7 +64,7 @@ abstract class ComponentImplementationTest<T : InternalComponent> : CommonCompon
         target.focusGiven()
         rendererStub.clear()
         target.mouseEntered(
-                event = MouseEvent(MOUSE_ENTERED, 1, Position.zero()),
+                event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
 
         assertThat(target.componentState).isEqualTo(HIGHLIGHTED)

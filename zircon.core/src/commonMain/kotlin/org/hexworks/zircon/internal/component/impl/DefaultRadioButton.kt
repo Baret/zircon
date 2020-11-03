@@ -9,9 +9,8 @@ import org.hexworks.zircon.api.component.renderer.ComponentRenderingStrategy
 import org.hexworks.zircon.api.extensions.whenEnabledRespondWith
 import org.hexworks.zircon.api.uievent.MouseEvent
 import org.hexworks.zircon.api.uievent.UIEventPhase
-import org.hexworks.zircon.internal.component.impl.DefaultRadioButton.RadioButtonState.NOT_SELECTED
-import org.hexworks.zircon.internal.component.impl.DefaultRadioButton.RadioButtonState.PRESSED
-import org.hexworks.zircon.internal.component.impl.DefaultRadioButton.RadioButtonState.SELECTED
+import org.hexworks.zircon.api.uievent.UIEventResponse
+import org.hexworks.zircon.internal.component.impl.DefaultRadioButton.RadioButtonState.*
 
 @Suppress("DuplicatedCode")
 class DefaultRadioButton(
@@ -38,21 +37,21 @@ class DefaultRadioButton(
         }
     }
 
-    override fun mouseExited(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseExited(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             state = if (isSelected) SELECTED else NOT_SELECTED
         }
         super.mouseExited(event, phase)
     }
 
-    override fun mousePressed(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mousePressed(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             state = PRESSED
         }
         super.mousePressed(event, phase)
     }
 
-    override fun mouseReleased(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseReleased(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             state = SELECTED
             isSelected = true

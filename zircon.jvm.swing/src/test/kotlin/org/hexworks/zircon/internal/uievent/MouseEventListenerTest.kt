@@ -10,7 +10,7 @@ import java.util.*
 class MouseEventListenerTest {
 
     lateinit var target: MouseEventListener
-    lateinit var operations: Map<(MouseEvent) -> Unit, MouseEventType>
+    lateinit var operations: Map<(MouseEvent<*>) -> Unit, MouseEventType>
 
     val inputs = LinkedList<UIEvent>()
 

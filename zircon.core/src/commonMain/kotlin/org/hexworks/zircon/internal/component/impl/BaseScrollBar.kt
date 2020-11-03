@@ -138,9 +138,9 @@ abstract class BaseScrollBar(
         }
     }
 
-    abstract fun getMousePosition(event: MouseEvent): Int
+    abstract fun getMousePosition(event: MouseEvent<*>): Int
 
-    override fun mousePressed(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mousePressed(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             LOGGER.debug("ScrollBar (id=${id.abbreviate()}, disabled=$isDisabled) was mouse pressed.")
             componentState = ComponentState.ACTIVE
@@ -156,7 +156,7 @@ abstract class BaseScrollBar(
         } else Pass
     }
 
-    override fun mouseDragged(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseDragged(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             LOGGER.debug("ScrollBar (id=${id.abbreviate()}, disabled=$isDisabled) was mouse pressed.")
             componentState = ComponentState.ACTIVE

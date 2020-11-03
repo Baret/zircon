@@ -4,22 +4,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.hexworks.cobalt.databinding.api.value.ValueValidationFailedException
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.zircon.api.CP437TilesetResources
-import org.hexworks.zircon.api.DrawSurfaces
 import org.hexworks.zircon.api.component.ComponentStyleSet
 import org.hexworks.zircon.api.component.data.ComponentMetadata
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Size
-import org.hexworks.zircon.api.graphics.TileGraphics
 import org.hexworks.zircon.api.uievent.KeyCode
 import org.hexworks.zircon.api.uievent.KeyboardEvent
 import org.hexworks.zircon.api.uievent.KeyboardEventType.KEY_PRESSED
 import org.hexworks.zircon.api.uievent.MouseEvent
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_CLICKED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_DRAGGED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_MOVED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_PRESSED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_WHEEL_ROTATED_DOWN
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_WHEEL_ROTATED_UP
+import org.hexworks.zircon.api.uievent.MouseEventType.*
 import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.uievent.UIEventPhase.TARGET
 import org.hexworks.zircon.internal.component.InternalComponent
@@ -85,7 +78,7 @@ abstract class CommonComponentTest<T : InternalComponent> {
     open fun shouldProperlyHandleMouseClicked() {
         rendererStub.clear()
 
-        target.mouseClicked(MouseEvent(MOUSE_CLICKED, 1, Position.zero()), TARGET)
+        target.mouseClicked(MouseEvent<Any?>(MOUSE_CLICKED, 1, Position.zero()), TARGET)
     }
 
 
@@ -94,7 +87,7 @@ abstract class CommonComponentTest<T : InternalComponent> {
         rendererStub.clear()
 
         target.mouseWheelRotatedUp(
-                event = MouseEvent(MOUSE_WHEEL_ROTATED_UP, 1, Position.zero()),
+                event = MouseEvent<Any?>(MOUSE_WHEEL_ROTATED_UP, 1, Position.zero()),
                 phase = TARGET)
     }
 
@@ -103,7 +96,7 @@ abstract class CommonComponentTest<T : InternalComponent> {
         rendererStub.clear()
 
         target.mouseWheelRotatedDown(
-                event = MouseEvent(MOUSE_WHEEL_ROTATED_DOWN, 1, Position.zero()),
+                event = MouseEvent<Any?>(MOUSE_WHEEL_ROTATED_DOWN, 1, Position.zero()),
                 phase = TARGET)
     }
 
@@ -112,7 +105,7 @@ abstract class CommonComponentTest<T : InternalComponent> {
         rendererStub.clear()
 
         target.mouseDragged(
-                event = MouseEvent(MOUSE_DRAGGED, 1, Position.zero()),
+                event = MouseEvent<Any?>(MOUSE_DRAGGED, 1, Position.zero()),
                 phase = TARGET)
     }
 
@@ -121,7 +114,7 @@ abstract class CommonComponentTest<T : InternalComponent> {
         rendererStub.clear()
 
         target.mouseMoved(
-                event = MouseEvent(MOUSE_MOVED, 1, Position.zero()),
+                event = MouseEvent<Any?>(MOUSE_MOVED, 1, Position.zero()),
                 phase = TARGET)
     }
 
@@ -146,13 +139,13 @@ abstract class CommonComponentTest<T : InternalComponent> {
 
     @Test
     open fun shouldProperlyHandleOnMouseEvent() {
-        var maybeEvent = Maybe.empty<MouseEvent>()
+        var maybeEvent = Maybe.empty<MouseEvent<*>>()
         target.handleMouseEvents(MOUSE_PRESSED) { event, _ ->
             maybeEvent = Maybe.of(event)
             Processed
         }
 
-        val event = MouseEvent(
+        val event = MouseEvent<Any?>(
                 type = MOUSE_PRESSED,
                 button = 1,
                 position = Position.defaultPosition())

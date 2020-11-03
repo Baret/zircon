@@ -11,10 +11,7 @@ import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Rect
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.uievent.MouseEvent
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_CLICKED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_ENTERED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_EXITED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_PRESSED
+import org.hexworks.zircon.api.uievent.MouseEventType.*
 import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.uievent.UIEventPhase.BUBBLE
 import org.hexworks.zircon.api.uievent.UIEventPhase.TARGET
@@ -137,7 +134,7 @@ class DefaultComponentTest : CommonComponentTest<DefaultComponent>() {
         }
 
         target.process(
-                event = MouseEvent(MOUSE_CLICKED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_CLICKED, 1, Position.defaultPosition()),
                 phase = BUBBLE)
 
         assertThat(notified).isTrue()
@@ -146,7 +143,7 @@ class DefaultComponentTest : CommonComponentTest<DefaultComponent>() {
     @Test
     fun When_a_component_is_hovered_Then_it_has_mouse_over_style() {
         target.mouseEntered(
-                event = MouseEvent(MOUSE_ENTERED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.defaultPosition()),
                 phase = TARGET)
 
         assertThat(target.componentState).isEqualTo(ComponentState.HIGHLIGHTED)
@@ -155,11 +152,11 @@ class DefaultComponentTest : CommonComponentTest<DefaultComponent>() {
     @Test
     fun When_a_component_is_no_longer_hovered_and_has_no_focus_Then_style_is_reset() {
         target.mouseEntered(
-                event = MouseEvent(MOUSE_ENTERED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.defaultPosition()),
                 phase = TARGET)
 
         target.mouseExited(
-                event = MouseEvent(MOUSE_EXITED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_EXITED, 1, Position.defaultPosition()),
                 phase = TARGET)
 
         assertThat(target.componentState).isEqualTo(ComponentState.DEFAULT)
@@ -170,7 +167,7 @@ class DefaultComponentTest : CommonComponentTest<DefaultComponent>() {
         target.focusGiven()
 
         target.mouseExited(
-                event = MouseEvent(MOUSE_EXITED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_EXITED, 1, Position.defaultPosition()),
                 phase = TARGET)
 
         assertThat(target.componentState).isEqualTo(ComponentState.FOCUSED)
@@ -215,7 +212,7 @@ class DefaultComponentTest : CommonComponentTest<DefaultComponent>() {
         }
 
         target.process(
-                event = MouseEvent(MOUSE_PRESSED, 1, POSITION_2_3),
+                event = MouseEvent<Any?>(MOUSE_PRESSED, 1, POSITION_2_3),
                 phase = BUBBLE)
 
         assertThat(pressed.get()).isTrue()

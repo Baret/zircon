@@ -9,21 +9,21 @@ import org.hexworks.zircon.api.uievent.*
  */
 interface MouseEventAdapter {
 
-    fun mouseClicked(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseClicked(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mousePressed(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mousePressed(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseReleased(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseReleased(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseEntered(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseEntered(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseExited(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseExited(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseWheelRotatedUp(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseWheelRotatedUp(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseWheelRotatedDown(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseWheelRotatedDown(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseDragged(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseDragged(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 
-    fun mouseMoved(event: MouseEvent, phase: UIEventPhase): UIEventResponse = Pass
+    fun mouseMoved(event: MouseEvent<*>, phase: UIEventPhase): UIEventResponse = Pass
 }

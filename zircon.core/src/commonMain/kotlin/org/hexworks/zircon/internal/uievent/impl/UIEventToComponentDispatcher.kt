@@ -6,15 +6,10 @@ import org.hexworks.cobalt.logging.api.LoggerFactory
 import org.hexworks.zircon.api.component.Component
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.uievent.*
-import org.hexworks.zircon.api.uievent.ComponentEventType.ACTIVATED
-import org.hexworks.zircon.api.uievent.ComponentEventType.DEACTIVATED
-import org.hexworks.zircon.api.uievent.ComponentEventType.FOCUS_GIVEN
-import org.hexworks.zircon.api.uievent.ComponentEventType.FOCUS_TAKEN
+import org.hexworks.zircon.api.uievent.ComponentEventType.*
 import org.hexworks.zircon.api.uievent.KeyboardEventType.KEY_PRESSED
 import org.hexworks.zircon.api.uievent.MouseEventType.*
-import org.hexworks.zircon.api.uievent.UIEventPhase.BUBBLE
-import org.hexworks.zircon.api.uievent.UIEventPhase.CAPTURE
-import org.hexworks.zircon.api.uievent.UIEventPhase.TARGET
+import org.hexworks.zircon.api.uievent.UIEventPhase.*
 import org.hexworks.zircon.internal.Zircon
 import org.hexworks.zircon.internal.behavior.ComponentFocusOrderList
 import org.hexworks.zircon.internal.component.InternalComponent
@@ -86,7 +81,7 @@ class UIEventToComponentDispatcher(
      */
     private fun performComponentEvents(target: InternalComponent, event: UIEvent): UIEventResponse {
         return when (event) {
-            is MouseEvent -> {
+            is MouseEvent<*> -> {
                 when (event.type) {
                     MOUSE_PRESSED -> focusComponent(target).pickByPrecedence(activateComponent(target))
                     MOUSE_RELEASED -> deactivateComponent(target)
@@ -120,7 +115,7 @@ class UIEventToComponentDispatcher(
      * event.
      */
     @ExperimentalContracts
-    private fun handleHoveredComponentChange(event: MouseEvent): UIEventResponse {
+    private fun handleHoveredComponentChange(event: MouseEvent<*>): UIEventResponse {
         val exitedResponse = dispatch(event.copy(
                 type = MOUSE_EXITED,
                 position = lastMousePosition))
@@ -142,7 +137,7 @@ class UIEventToComponentDispatcher(
             is KeyboardEvent -> {
                 Maybe.of(focusOrderList.focusedComponent)
             }
-            is MouseEvent -> {
+            is MouseEvent<*> -> {
                 root.fetchComponentByPosition(event.position)
             }
             else -> {
@@ -198,7 +193,7 @@ class UIEventToComponentDispatcher(
     @ExperimentalContracts
     private fun tryDefaultsFor(component: InternalComponent, event: UIEvent, phase: UIEventPhase): UIEventResponse {
         return when (event) {
-            is MouseEvent -> {
+            is MouseEvent<*> -> {
                 when (event.type) {
                     MOUSE_CLICKED -> component.mouseClicked(event, phase)
                     MOUSE_PRESSED -> component.mousePressed(event, phase)
@@ -288,9 +283,9 @@ private fun mouseExitedComponent(
         root: RootContainer
 ): Boolean {
     contract {
-        returns(true) implies (event is MouseEvent)
+        returns(true) implies (event is MouseEvent<*>)
     }
-    return if (event is MouseEvent &&
+    return if (event is MouseEvent<*> &&
             event.type in setOf(MOUSE_MOVED, MOUSE_DRAGGED) &&
             event.position != lastMousePosition) {
         root.fetchComponentByPosition(event.position).map { currentComponent ->

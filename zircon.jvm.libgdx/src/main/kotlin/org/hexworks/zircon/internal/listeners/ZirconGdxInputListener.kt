@@ -1,14 +1,10 @@
 package org.hexworks.zircon.internal.listeners
 
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.Input.*
 import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.InputProcessor
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.uievent.*
-import org.hexworks.zircon.api.uievent.KeyboardEventType.KEY_RELEASED
-import org.hexworks.zircon.api.uievent.KeyboardEventType.KEY_PRESSED
-import org.hexworks.zircon.api.uievent.KeyboardEventType.KEY_TYPED
+import org.hexworks.zircon.api.uievent.KeyboardEventType.*
 import org.hexworks.zircon.internal.config.RuntimeConfig
 import org.hexworks.zircon.internal.grid.InternalTileGrid
 import org.hexworks.zircon.internal.uievent.injectStringAsKeyboardEvents
@@ -152,7 +148,7 @@ class ZirconInputListener(private val fontWidth: Int,
             val position = Position.create(
                     x = Math.max(0, x.div(fontWidth)),
                     y = Math.max(0, y.div(fontHeight)))
-            MouseEvent(
+            MouseEvent<Any?>(
                     type = eventType,
                     button = button,
                     position = position).let {

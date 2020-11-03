@@ -20,9 +20,7 @@ import org.hexworks.zircon.internal.behavior.impl.ThreadSafeLayerable
 import org.hexworks.zircon.internal.component.InternalComponentContainer
 import org.hexworks.zircon.internal.component.impl.ModalComponentContainer
 import org.hexworks.zircon.internal.component.modal.DefaultModal
-import org.hexworks.zircon.internal.event.ZirconEvent.HideCursor
-import org.hexworks.zircon.internal.event.ZirconEvent.RequestCursorAt
-import org.hexworks.zircon.internal.event.ZirconEvent.ScreenSwitch
+import org.hexworks.zircon.internal.event.ZirconEvent.*
 import org.hexworks.zircon.internal.event.ZirconScope
 import org.hexworks.zircon.internal.graphics.Renderable
 import org.hexworks.zircon.internal.grid.InternalTileGrid
@@ -89,7 +87,7 @@ class TileGridScreen(
 
     override fun handleMouseEvents(
             eventType: MouseEventType,
-            handler: (event: MouseEvent, phase: UIEventPhase) -> UIEventResponse
+            handler: (event: MouseEvent<*>, phase: UIEventPhase) -> UIEventResponse
     ): Subscription {
         return eventProcessor.handleMouseEvents(eventType) { event, phase ->
             if (componentContainer.isMainContainerActive()) {

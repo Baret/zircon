@@ -14,7 +14,7 @@ interface UIEventSource {
      */
     fun handleMouseEvents(
             eventType: MouseEventType,
-            handler: (event: MouseEvent, phase: UIEventPhase) -> UIEventResponse
+            handler: (event: MouseEvent<*>, phase: UIEventPhase) -> UIEventResponse
     ): Subscription
 
     /**
@@ -28,7 +28,7 @@ interface UIEventSource {
      */
     fun processMouseEvents(
             eventType: MouseEventType,
-            handler: (event: MouseEvent, phase: UIEventPhase) -> Unit): Subscription
+            handler: (event: MouseEvent<*>, phase: UIEventPhase) -> Unit): Subscription
 
     /**
      * Adds the given [handler] for keyboard events. Use this if you selectively

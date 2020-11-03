@@ -17,12 +17,12 @@ open class MouseEventListener(
         private val fontHeight: Int) : MouseAdapter() {
 
     private val logger = LoggerFactory.getLogger(this::class)
-    private val events = mutableListOf<Pair<org.hexworks.zircon.api.uievent.MouseEvent, UIEventPhase>>()
+    private val events = mutableListOf<Pair<org.hexworks.zircon.api.uievent.MouseEvent<*>, UIEventPhase>>()
 
     private var lastMouseLocation = Position.unknown()
 
     @Synchronized
-    fun drainEvents(): Iterable<Pair<org.hexworks.zircon.api.uievent.MouseEvent, UIEventPhase>> {
+    fun drainEvents(): Iterable<Pair<org.hexworks.zircon.api.uievent.MouseEvent<*>, UIEventPhase>> {
         return events.toList().also {
             events.clear()
         }
@@ -75,7 +75,8 @@ open class MouseEventListener(
             org.hexworks.zircon.api.uievent.MouseEvent(
                     type = eventType,
                     button = e.button,
-                    position = position).let {
+                    position = position,
+                    source = this).let {
                 if (mouseMovedToNewPosition(eventType, position)
                                 .or(isNotMoveEvent(eventType))) {
                     lastMouseLocation = position

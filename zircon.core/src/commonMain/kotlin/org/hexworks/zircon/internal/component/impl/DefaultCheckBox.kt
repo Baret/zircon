@@ -10,10 +10,7 @@ import org.hexworks.zircon.api.extensions.whenEnabled
 import org.hexworks.zircon.api.extensions.whenEnabledRespondWith
 import org.hexworks.zircon.api.uievent.MouseEvent
 import org.hexworks.zircon.api.uievent.UIEventPhase
-import org.hexworks.zircon.internal.component.impl.DefaultCheckBox.CheckBoxState.CHECKED
-import org.hexworks.zircon.internal.component.impl.DefaultCheckBox.CheckBoxState.CHECKING
-import org.hexworks.zircon.internal.component.impl.DefaultCheckBox.CheckBoxState.UNCHECKED
-import org.hexworks.zircon.internal.component.impl.DefaultCheckBox.CheckBoxState.UNCHECKING
+import org.hexworks.zircon.internal.component.impl.DefaultCheckBox.CheckBoxState.*
 import kotlin.jvm.Synchronized
 
 @Suppress("DuplicatedCode")
@@ -40,7 +37,7 @@ class DefaultCheckBox(
     }
 
     @Synchronized
-    override fun mouseExited(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseExited(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             pressing = false
             this.checkBoxState = if (isSelected) CHECKED else UNCHECKED

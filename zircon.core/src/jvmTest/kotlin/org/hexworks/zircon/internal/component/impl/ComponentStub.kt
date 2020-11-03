@@ -117,11 +117,11 @@ class ComponentStub(
         error("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun handleMouseEvents(eventType: MouseEventType, handler: (event: MouseEvent, phase: UIEventPhase) -> UIEventResponse): Subscription {
+    override fun handleMouseEvents(eventType: MouseEventType, handler: (event: MouseEvent<*>, phase: UIEventPhase) -> UIEventResponse): Subscription {
         error("not implemented")
     }
 
-    override fun processMouseEvents(eventType: MouseEventType, handler: (event: MouseEvent, phase: UIEventPhase) -> Unit): Subscription {
+    override fun processMouseEvents(eventType: MouseEventType, handler: (event: MouseEvent<*>, phase: UIEventPhase) -> Unit): Subscription {
         error("not implemented")
     }
 

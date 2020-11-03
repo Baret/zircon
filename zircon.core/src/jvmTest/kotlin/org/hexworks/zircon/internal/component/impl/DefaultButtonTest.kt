@@ -12,17 +12,16 @@ import org.hexworks.zircon.api.component.data.ComponentMetadata
 import org.hexworks.zircon.api.component.data.ComponentState.*
 import org.hexworks.zircon.api.component.renderer.ComponentRenderContext
 import org.hexworks.zircon.api.component.renderer.ComponentRenderer
-import org.hexworks.zircon.internal.component.renderer.DefaultComponentRenderingStrategy
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.graphics.TileGraphics
 import org.hexworks.zircon.api.uievent.MouseEvent
 import org.hexworks.zircon.api.uievent.MouseEventType
 import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_ENTERED
-import org.hexworks.zircon.api.uievent.MouseEventType.MOUSE_PRESSED
 import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.api.uievent.UIEventPhase
 import org.hexworks.zircon.internal.component.renderer.DefaultButtonRenderer
+import org.hexworks.zircon.internal.component.renderer.DefaultComponentRenderingStrategy
 import org.junit.Before
 import org.junit.Test
 
@@ -113,7 +112,7 @@ class DefaultButtonTest : FocusableComponentImplementationTest<DefaultButton>() 
     @Test
     fun shouldProperlyHandleMousePress() {
         target.mouseEntered(
-                event = MouseEvent(MOUSE_ENTERED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MOUSE_ENTERED, 1, Position.defaultPosition()),
                 phase = UIEventPhase.TARGET)
         target.activated()
 
@@ -125,7 +124,7 @@ class DefaultButtonTest : FocusableComponentImplementationTest<DefaultButton>() 
         target.focusGiven()
         target.activated()
         target.mouseReleased(
-                event = MouseEvent(MouseEventType.MOUSE_RELEASED, 1, Position.defaultPosition()),
+                event = MouseEvent<Any?>(MouseEventType.MOUSE_RELEASED, 1, Position.defaultPosition()),
                 phase = UIEventPhase.TARGET)
 
         assertThat(target.componentState).isEqualTo(HIGHLIGHTED)

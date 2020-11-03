@@ -21,7 +21,7 @@ class DefaultVerticalSlider(
         numberOfSteps = numberOfSteps
 ) {
 
-    override fun getMousePosition(event: MouseEvent): Int {
+    override fun getMousePosition(event: MouseEvent<*>): Int {
         return event.position.minus(absolutePosition + contentOffset).y
     }
 

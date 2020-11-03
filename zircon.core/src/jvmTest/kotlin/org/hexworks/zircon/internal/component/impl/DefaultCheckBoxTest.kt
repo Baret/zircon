@@ -9,10 +9,7 @@ import org.hexworks.zircon.api.color.TileColor
 import org.hexworks.zircon.api.component.CheckBox
 import org.hexworks.zircon.api.component.ComponentStyleSet
 import org.hexworks.zircon.api.component.data.ComponentMetadata
-import org.hexworks.zircon.api.component.data.ComponentState
-import org.hexworks.zircon.api.component.data.ComponentState.ACTIVE
-import org.hexworks.zircon.api.component.data.ComponentState.DEFAULT
-import org.hexworks.zircon.api.component.data.ComponentState.FOCUSED
+import org.hexworks.zircon.api.component.data.ComponentState.*
 import org.hexworks.zircon.api.component.renderer.ComponentRenderContext
 import org.hexworks.zircon.api.component.renderer.ComponentRenderer
 import org.hexworks.zircon.api.data.Position
@@ -122,7 +119,7 @@ class DefaultCheckBoxTest : FocusableComponentImplementationTest<DefaultCheckBox
 
     @Test
     override fun When_a_highlighted_component_without_focus_is_activated_Then_it_becomes_active() {
-        target.mouseEntered(event = MouseEvent(MouseEventType.MOUSE_ENTERED, 1, Position.zero()),
+        target.mouseEntered(event = MouseEvent<Any?>(MouseEventType.MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
         target.activated()
 
@@ -131,7 +128,7 @@ class DefaultCheckBoxTest : FocusableComponentImplementationTest<DefaultCheckBox
 
     @Test
     override fun When_a_highlighted_component_with_focus_is_activated_Then_it_becomes_active() {
-        target.mouseEntered(event = MouseEvent(MouseEventType.MOUSE_ENTERED, 1, Position.zero()),
+        target.mouseEntered(event = MouseEvent<Any?>(MouseEventType.MOUSE_ENTERED, 1, Position.zero()),
                 phase = UIEventPhase.TARGET)
         target.focusGiven()
         target.activated()

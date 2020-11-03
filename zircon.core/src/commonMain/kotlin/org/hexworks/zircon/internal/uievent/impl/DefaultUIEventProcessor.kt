@@ -1,8 +1,8 @@
 package org.hexworks.zircon.internal.uievent.impl
 
 import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentHashMapOf
+import kotlinx.collections.immutable.persistentListOf
 import org.hexworks.cobalt.core.behavior.DisposeState
 import org.hexworks.cobalt.core.behavior.NotDisposed
 import org.hexworks.cobalt.databinding.api.extension.toProperty
@@ -50,19 +50,19 @@ class DefaultUIEventProcessor : UIEventProcessor, UIEventSource, ComponentEventS
 
     override fun handleMouseEvents(
             eventType: MouseEventType,
-            handler: (event: MouseEvent, phase: UIEventPhase) -> UIEventResponse): Subscription {
+            handler: (event: MouseEvent<*>, phase: UIEventPhase) -> UIEventResponse): Subscription {
         checkClosed()
         return buildSubscription(eventType) { event, phase ->
-            handler(event as MouseEvent, phase)
+            handler(event as MouseEvent<*>, phase)
         }
     }
 
     override fun processMouseEvents(
             eventType: MouseEventType,
-            handler: (event: MouseEvent, phase: UIEventPhase) -> Unit): Subscription {
+            handler: (event: MouseEvent<*>, phase: UIEventPhase) -> Unit): Subscription {
         checkClosed()
         return buildSubscription(eventType) { event, phase ->
-            handler(event as MouseEvent, phase)
+            handler(event as MouseEvent<*>, phase)
             Processed
         }
     }

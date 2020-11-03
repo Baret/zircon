@@ -8,7 +8,7 @@ data class MouseEventMatcher(
         val position: Position? = null
 ) {
 
-    fun matches(event: MouseEvent): Boolean {
+    fun matches(event: MouseEvent<*>): Boolean {
         var result = true
         type?.let {
             result = result && it == event.type

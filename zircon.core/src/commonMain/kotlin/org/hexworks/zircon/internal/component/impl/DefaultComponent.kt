@@ -196,21 +196,21 @@ abstract class DefaultComponent(
 
     override fun acceptsFocus() = isDisabled.not()
 
-    override fun mouseEntered(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseEntered(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             updateComponentState(MOUSE_ENTERED)
             Processed
         } else Pass
     }
 
-    override fun mouseExited(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseExited(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             updateComponentState(MOUSE_EXITED)
             Processed
         } else Pass
     }
 
-    override fun mouseReleased(event: MouseEvent, phase: UIEventPhase) = whenEnabledRespondWith {
+    override fun mouseReleased(event: MouseEvent<*>, phase: UIEventPhase) = whenEnabledRespondWith {
         if (phase == UIEventPhase.TARGET) {
             updateComponentState(MOUSE_RELEASED)
             Processed
